@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual do TCC — Fisioterapia UFC | Guia Interativo Oficial</title>
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-main: #DFEBE5;
+      --primary: #07857A;
+      --primary-hover: #0E897D;
+      --secondary: #499378;
+      --text-dark: #201A1D;
+      --border-card: #A2C1B0;
+      --table-border: #C0DBD1;
+      --highlight: #C0DBD1;
+      --card-bg: #FFFFFF;
+      --shadow-card: rgba(7, 133, 122, 0.10);
+      --font-stack: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      font-family: var(--font-stack);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+    }
+
+    /* Acessibilidade de Foco (WCAG) */
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #000000;
+      outline-offset: 2px;
+    }
+
+    /* Tipografia de Cabeçalhos */
+    h1, h2, h3, h4 {
+      font-family: var(--font-stack);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--primary);
+    }
+
+    h1 { font-size: 1.75rem; letter-spacing: -0.02em; }
+    h2 { font-size: 1.35rem; margin-bottom: 1rem; border-bottom: 2px solid var(--secondary); padding-bottom: 0.4rem; }
+    h3 { font-size: 1.1rem; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+    h4 { font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0.35rem; }
+
+    p, li, td, th {
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    strong, b {
+      font-weight: 600;
+    }
+
+    /* Top Bar / Header */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #FFFFFF;
+    }
+
+    .ufc-crest {
+      height: 48px;
+      width: auto;
+      max-width: 60px;
+      object-fit: contain;
+      background: #FFFFFF;
+      border-radius: 4px;
+      padding: 2px;
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-institution {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+    }
+
+    .brand-course {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    /* Campo de Busca Interativo */
+    .header-search {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .search-input-wrapper {
+      display: flex;
+      align-items: center;
+      background: #FFFFFF;
+      border-radius: 30px;
+      padding: 0.25rem 0.5rem 0.25rem 1rem;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .search-input-wrapper:focus-within {
+      border-color: #000000;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      background: transparent;
+    }
+
+    .search-counter {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0.5rem;
+      white-space: nowrap;
+    }
+
+    .search-nav-btn {
+      background: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 2px;
+      transition: background 0.2s;
+    }
+
+    .search-nav-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-toggle-menu {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #FFFFFF;
+      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* Layout Principal */
+    .app-container {
+      display: flex;
+      flex: 1;
+      position: relative;
+    }
+
+    /* Menu Lateral Fixo */
+    .app-sidebar {
+      width: 290px;
+      min-width: 290px;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      position: sticky;
+      top: 65px;
+      height: calc(100vh - 65px);
+      overflow-y: auto;
+      padding: 1.25rem 0.75rem;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+      scrollbar-width: thin;
+      scrollbar-color: var(--secondary) var(--primary);
+    }
+
+    .sidebar-heading {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+      opacity: 0.85;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .menu-item-link {
+      display: block;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 0.55rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+      line-height: 1.3;
+    }
+
+    .menu-item-link:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+    }
+
+    /* Item Ativo em Pill Branca */
+    .menu-item-link.active {
+      background-color: #FFFFFF !important;
+      color: var(--primary) !important;
+      font-weight: 700 !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* Subitens */
+    .sidebar-submenu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-left: 1rem;
+      padding-left: 0.5rem;
+      border-left: 2px solid rgba(255,255,255,0.25);
+      margin-top: 0.25rem;
+    }
+
+    .sidebar-submenu .menu-item-link {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.7rem;
+    }
+
+    /* Área Central de Conteúdo */
+    .app-main {
+      flex: 1;
+      padding: 2rem 2.5rem 4rem 2.5rem;
+      max-width: 1050px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* Seções */
+    .content-section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 85px;
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-card);
+      box-shadow: 0 4px 12px var(--shadow-card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 16px rgba(7, 133, 122, 0.16);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      vertical-align: middle;
+      margin-right: 0.4rem;
+    }
+
+    /* Números-chave */
+    .key-number {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 8px var(--shadow-card);
+    }
+
+    .stat-card p {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Links do Texto */
+    .app-main a:not(.menu-item-link):not(.tab-button):not(.btn) {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .app-main a:not(.menu-item-link):not(.tab-button):not(.btn):hover {
+      color: var(--primary-hover);
+    }
+
+    /* Tabelas */
+    .table-container {
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border-radius: 8px;
+      border: 1px solid var(--table-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      border-right: 1px solid var(--table-border);
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+
+    th:last-child {
+      border-right: none;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--table-border);
+      border-right: 1px solid var(--table-border);
+    }
+
+    td:last-child {
+      border-right: none;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--bg-main);
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #FFFFFF;
+    }
+
+    tbody tr:hover {
+      background-color: rgba(7, 133, 122, 0.08);
+    }
+
+    /* Accordions */
+    .accordion-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+
+    .accordion-item {
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      padding: 0.9rem 1.25rem;
+      text-align: left;
+      background: #FFFFFF;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      transition: background 0.2s;
+    }
+
+    .accordion-trigger:hover {
+      background: var(--bg-main);
+    }
+
+    .accordion-icon {
+      width: 18px;
+      height: 18px;
+      stroke: var(--secondary);
+      stroke-width: 2.5;
+      fill: none;
+      transition: transform 0.2s ease;
+    }
+
+    .accordion-item.open .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      background: #FFFFFF;
+    }
+
+    .accordion-body {
+      padding: 1.25rem;
+      border-top: 1px solid var(--table-border);
+      font-size: 0.9rem;
+    }
+
+    /* Abas / Tabs */
+    .tabs-wrapper {
+      margin: 1.5rem 0;
+    }
+
+    .tabs-header {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid var(--secondary);
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 0.65rem 1.25rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      color: var(--text-dark);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-button:hover {
+      background: var(--bg-main);
+      color: var(--primary);
+    }
+
+    .tab-button.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+    }
+
+    .tab-panel {
+      display: none;
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px var(--shadow-card);
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: fadeIn 0.2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Linha do Tempo e Fluxogramas */
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--secondary);
+    }
+
+    .flow-step-card {
+      position: relative;
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-radius: 10px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 6px var(--shadow-card);
+      transition: transform 0.15s ease;
+    }
+
+    .flow-step-card:hover {
+      transform: translateX(4px);
+    }
+
+    .flow-step-badge {
+      position: absolute;
+      left: -2.35rem;
+      top: 1.2rem;
+      width: 26px;
+      height: 26px;
+      background: var(--primary);
+      color: #FFFFFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 0 0 4px var(--bg-main);
+    }
+
+    .flow-step-meta {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Avisos e Callouts */
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: #FFFFFF;
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+      box-shadow: 0 2px 6px var(--shadow-card);
+    }
+
+    .callout-warning {
+      border-left-color: #B23B3B;
+      background: #FFF5F5;
+    }
+
+    .callout-update {
+      border-left-color: var(--secondary);
+      background: #FFFFFF;
+    }
+
+    /* Destaques de Busca */
+    mark.search-highlight {
+      background-color: var(--highlight) !important;
+      color: var(--primary) !important;
+      font-weight: 600 !important;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+
+    mark.search-current {
+      background-color: #FFE58F !important;
+      outline: 2px solid var(--primary);
+    }
+
+    /* Rodapé */
+    .app-footer {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      padding: 2.5rem 1.5rem;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .footer-content hr {
+      border: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+      margin: 0.75rem 0;
+    }
+
+    .footer-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Responsividade */
+    @media (max-width: 900px) {
+      .btn-toggle-menu {
+        display: inline-block;
+      }
+
+      .app-sidebar {
+        position: fixed;
+        left: -320px;
+        top: 65px;
+        height: calc(100vh - 65px);
+        z-index: 999;
+        transition: left 0.3s ease;
+      }
+
+      .app-sidebar.open {
+        left: 0;
+      }
+
+      .app-main {
+        padding: 1.5rem 1rem 3rem 1rem;
+      }
+
+      .header-search {
+        max-width: 240px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar / Cabeçalho -->
+  <header class="app-header">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <button class="btn-toggle-menu" id="toggleMenuBtn" aria-label="Abrir ou fechar menu de navegação" aria-expanded="false">
+        ☰
+      </button>
+      <a href="#apresentacao" class="header-brand" aria-label="Página Inicial do Guia de TCC">
+        <!-- Brasão oficial da UFC embutido em Base64 extraído do documento -->
+        <img class="ufc-crest" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF8AAABPCAIAAAAC+I45AAAJNElEQVR4nO2dbVAU5xnHf3dweV4q" alt="Brasão Oficial da Universidade Federal do Ceará">
+        <div class="brand-titles">
+          <span class="brand-institution">Universidade Federal do Ceará • FAMED</span>
+          <span class="brand-course">Curso de Fisioterapia • Guia do TCC</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Barra de Pesquisa Interativa -->
+    <div class="header-search">
+      <div class="search-input-wrapper">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar no manual (ex: prazos, banca, CEP, nota)..." aria-label="Pesquisar termo em todo o manual">
+        <span id="searchCounter" class="search-counter" aria-live="polite"></span>
+        <button id="prevMatchBtn" class="search-nav-btn" title="Ocorrência anterior" aria-label="Ocorrência anterior">▲</button>
+        <button id="nextMatchBtn" class="search-nav-btn" title="Próxima ocorrência" aria-label="Próxima ocorrência">▼</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container Geral -->
+  <div class="app-container">
+
+    <!-- Menu Lateral Fixo -->
+    <nav class="app-sidebar" id="sidebarNav" aria-label="Sumário da disciplina e manual">
+      <div class="sidebar-heading">Sumário Interativo</div>
+      <ul class="sidebar-menu">
+        <li><a href="#apresentacao" class="menu-item-link active">Apresentação & Eixos</a></li>
+        <li>
+          <a href="#sec1" class="menu-item-link">1. Diretrizes & Matriz</a>
+          <ul class="sidebar-submenu">
+            <li><a href="#sec1-1" class="menu-item-link">1.1 Objetivos do TCC</a></li>
+            <li><a href="#sec1-2" class="menu-item-link">1.2 Tríade de Módulos (I, II, III)</a></li>
+            <li><a href="#sec1-3" class="menu-item-link">1.3 Modalidades (Original / Revisão)</a></li>
+            <li><a href="#sec1-4" class="menu-item-link">1.4 Normatização & Revista Eleita</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#sec2" class="menu-item-link">2. Jornada dos Módulos</a>
+          <ul class="sidebar-submenu">
+            <li><a href="#sec2-1" class="menu-item-link">2.1 TCC I: Projeto & Submissão Ética</a></li>
+            <li><a href="#sec2-2" class="menu-item-link">2.2 TCC II: Coleta & Relatório Parcial</a></li>
+            <li><a href="#sec2-3" class="menu-item-link">2.3 TCC III: Artigo, Defesa & Prazos</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#sec3" class="menu-item-link">3. Papéis & Atribuições</a>
+          <ul class="sidebar-submenu">
+            <li><a href="#sec3-1" class="menu-item-link">3.1 Professor Orientador</a></li>
+            <li><a href="#sec3-2" class="menu-item-link">3.2 Coorientador & Orientador Externo</a></li>
+            <li><a href="#sec3-3" class="menu-item-link">3.3 Corpo Discente</a></li>
+            <li><a href="#sec3-4" class="menu-item-link">3.4 Coordenação, Secretaria & Módulo</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#sec4" class="menu-item-link">4. Sessão de Defesa Pública</a>
+          <ul class="sidebar-submenu">
+            <li><a href="#sec4-1" class="menu-item-link">4.1 Banca Examinadora & Organização</a></li>
+            <li><a href="#sec4-2" class="menu-item-link">4.2 Estrutura da Sessão (60 min)</a></li>
+            <li><a href="#sec4-3" class="menu-item-link">4.3 Instrumentos de Avaliação Oral</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#sec5" class="menu-item-link">5. Critérios de Avaliação & Nota</a>
+          <ul class="sidebar-submenu">
+            <li><a href="#sec5-1" class="menu-item-link">5.1 Cálculo da Média & Dedutores</a></li>
+            <li><a href="#sec5-2" class="menu-item-link">5.2 Frequência & Requisitos de Aprovação</a></li>
+            <li><a href="#sec5-3" class="menu-item-link">5.3 Plágio & Rigor Ético</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#sec6" class="menu-item-link">6. Pós-Defesa & Repositório</a>
+          <ul class="sidebar-submenu">
+            <li><a href="#sec6-1" class="menu-item-link">6.1 Versão Final Corrigida (7 dias)</a></li>
+            <li><a href="#sec6-2" class="menu-item-link">6.2 Ficha Catalográfica & Termo de Depósito</a></li>
+            <li><a href="#sec6-3" class="menu-item-link">6.3 Ineditismo & Depósito Parcial</a></li>
+          </ul>
+        </li>
+        <li><a href="#sec7" class="menu-item-link">7. Guia de Apêndices & Modelos</a></li>
+      </ul>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="app-main" id="mainContent">
+
+      <!-- Apresentação -->
+      <section id="apresentacao" class="content-section">
+        <div class="card">
+          <span class="badge">Acolhimento & Contexto Acadêmico</span>
+          <h1>Manual Interativo de Conclusão de Curso (TCC)</h1>
+          <p style="margin-top: 0.75rem;">
+            O Trabalho de Conclusão de Curso em <strong>Fisioterapia da Universidade Federal do Ceará (UFC)</strong> constitui momento ímpar de síntese, expressão da totalidade da formação profissional e exercício rigoroso de reflexão investigativa, elaborado de forma individual[cite: 8]. Integrado ao <strong>Eixo 1 (Formação social, humana e em pesquisa)</strong> do Projeto Pedagógico do Curso (PPC), o percurso do TCC consolida as bases iniciadas no módulo de <em>Introdução à Pesquisa</em> (1º semestre) ao longo de três disciplinas sequenciais estruturadas com carga total de <strong>96 horas</strong>[cite: 7, 65].
+          </p>
+
+          <div class="callout callout-update">
+            <strong>Atualização Operacional Conforme Diretrizes Vigentes:</strong> A organização logística e o agendamento da sessão de defesa pública são de inteira responsabilidade do <strong>professor orientador do aluno</strong> em articulação direta com a banca examinadora, contando com a operacionalização institucional a cargo da <strong>Coordenação de Graduação</strong> e da <strong>Secretaria do Curso de Fisioterapia</strong>.
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="key-number">96 h</div>
+              <p>Carga horária total dividida entre TCC I, II e III no currículo[cite: 65].</p>
+            </div>
+            <div class="stat-card">
+              <div class="key-number">3</div>
+              <p>Semestres consecutivos de dedicação direta (8º ao 10º períodos)[cite: 26, 65].</p>
+            </div>
+            <div class="stat-card">
+              <div class="key-number">60 min</div>
+              <p>Duração média da sessão pública solene de defesa perante banca[cite: 28].</p>
+            </div>
+            <div class="stat-card">
+              <div class="key-number">7 dias</div>
+              <p>Prazo corrido para depósito no SIGAA do artigo final corrigido[cite: 16, 30].</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1. DIRETRIZES & MATRIZ -->
+      <section id="sec1" class="content-section">
+        <h2>1. Diretrizes Curriculares & Matriz Pedagógica</h2>
+
+        <div id="sec1-1" class="card">
+          <h3>1.1 Objetivos Formativos do TCC</h3>
+          <p>
+            O desenvolvimento do TCC em Fisioterapia na UFC visa a capacitar o estudante à prática investigativa contextualizada com a saúde coletiva e a evidência clínica[cite: 9, 10]:
+          </p>
+          <ul style="margin: 0.75rem 0 0.75rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li>Garantir formação interdisciplinar conectando ensino de graduação, pesquisa aplicada e extensão universitária[cite: 9].</li>
+            <li>Despertar postura profissional investigativa, crítica e autônoma frente às demandas da sociedade[cite: 10].</li>
+            <li>Apreender, testar e analisar aspectos da realidade sanitária com base no método científico rigoroso[cite: 10].</li>
+            <li>Dominar e aperfeiçoar a comunicação escrita e oral para sustentação pública em ambiente acadêmico[cite: 10].</li>
+          </ul>
+        </div>
+
+        <div id="sec1-2" class="card">
+          <h3>1.2 Estrutura da Tríade de Módulos (TCC I, II e III)</h3>
+          <p>
+            Conforme a matriz curricular do curso de Fisioterapia da UFC, os módulos devem ser cursados <strong>isoladamente, em semestres distintos e sucessivos</strong>, inclusive para estudantes com adaptações na grade curricular[cite: 26].
+          </p>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Módulo</th>
+                  <th scope="col">Período</th>
+                  <th scope="col">Carga Horária</th>
+                  <th scope="col">Pré-requisito</th>
+                  <th scope="col">Foco Principal & Produto Esperado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>TCC I</strong> (Pesquisa em Fisioterapia I)[cite: 65]</td>
+                  <td>8º Semestre[cite: 26, 65]</td>
+                  <td>32 horas[cite: 65]</td>
+                  <td>Introdução à Pesquisa (1º sem.)[cite: 65]</td>
+                  <td>Construção teórica e metodológica do projeto. <strong>Produto:</strong> Projeto de pesquisa concluído, qualificado por banca e submetido ao CEP/CEPA[cite: 14, 65].</td>
+                </tr>
+                <tr>
+                  <td><strong>TCC II</strong> (Pesquisa em Fisioterapia II)[cite: 65]</td>
+                  <td>9º Semestre[cite: 10, 65]</td>
+                  <td>32 horas[cite: 65]</td>
+                  <td>Aprovação no TCC I[cite: 10]</td>
+                  <td>Execução empírica, trabalho de campo e coleta de dados. <strong>Produto:</strong> Relatório técnico parcial entregue em versão digital[cite: 65].</td>
+                </tr>
+                <tr>
+                  <td><strong>TCC III</strong> (Pesquisa em Fisioterapia III)[cite: 65]</td>
+                  <td>10º Semestre[cite: 10, 65]</td>
+                  <td>32 horas[cite: 65]</td>
+                  <td>Aprovação no TCC II[cite: 10]</td>
+                  <td>Análise e discussão dos dados, redação final no formato de artigo científico e <strong>Defesa Pública perante Banca Examinadora</strong>[cite: 15, 65].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-dark); margin-top: 0.5rem;">
+            <em>Disciplinas de apoio optativo:</em> Metodologia da Pesquisa Científica (48 h) e Bioestatística (48 h)[cite: 65].
+          </p>
+        </div>
+
+        <div id="sec1-3" class="card">
+          <h3>1.3 Modalidades Aceitas para o Trabalho</h3>
+          <p>O discente pode optar por produzir um Artigo Original ou um Artigo de Revisão, de acordo com o delineamento estabelecido com seu orientador[cite: 11]:</p>
+          
+          <div class="tabs-wrapper">
+            <div class="tabs-header" role="tablist">
+              <button class="tab-button active" role="tab" aria-selected="true" data-tab="tab-artigo-original">Artigo Original</button>
+              <button class="tab-button" role="tab" aria-selected="false" data-tab="tab-artigo-revisao">Artigo de Revisão (Sistemática / Integrativa)</button>
+              <button class="tab-button" role="tab" aria-selected="false" data-tab="tab-artigo-narrativa">Revisão Narrativa</button>
+            </div>
+
+            <div id="tab-artigo-original" class="tab-panel active" role="tabpanel">
+              <h4>Caracterização do Artigo Original</h4>
+              <p>
+                Relato completo e aprofundado com abordagem inédita proveniente de investigação direta[cite: 11]. Inclui: estudos observacionais (coortes, caso-controle, transversais), ensaios clínicos experimentais e quase-experimentais, estudos randomizados ou duplo-cegos, análises de custo-efetividade, acurácia diagnóstica em triagens populacionais, pesquisa sociocultural e de campo na saúde pública[cite: 11].
+              </p>
+              <p style="margin-top: 0.5rem;">
+                <strong>Exigência metodológica:</strong> Utilização e menção explícita de ferramentas consagradas de padronização internacional de relato (como diretrizes <em>STROBE</em> para estudos observacionais e <em>CONSORT</em> para ensaios clínicos randomizados)[cite: 46, 47].
+              </p>
+            </div>
+
+            <div id="tab-artigo-revisao" class="tab-panel" role="tabpanel">
+              <h4>Revisão Sistemática e Revisão Integrativa</h4>
+              <p>
+                Síntese reprodutível e estruturada dos conhecimentos científicos publicados sobre pergunta clínica focal[cite: 11, 47].
+              </p>
+              <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+                <li>Exigência de apresentação de fluxograma detalhado de busca e seleção de estudos[cite: 48].</li>
+                <li>Uso obrigatório de ferramentas de avaliação da qualidade metodológica e risco de viés dos estudos incluídos[cite: 47].</li>
+                <li>Recomenda-se registro prévio do protocolo (ex.: PROSPERO) e adesão à diretriz <em>PRISMA</em>[cite: 48].</li>
+                <li>Apresentação de estratégia de confiabilidade entre pares e resolução formal de discordâncias[cite: 47, 48].</li>
+              </ul>
+            </div>
+
+            <div id="tab-artigo-narrativa" class="tab-panel" role="tabpanel">
+              <h4>Revisão Narrativa da Literatura</h4>
+              <p>
+                Texto que analisa e discute o estado da arte de determinada temática teórica ou contextual, estruturado com subtítulos claros e lógica expositiva coerente[cite: 11, 49].
+              </p>
+              <p style="margin-top: 0.5rem;">
+                <strong>Requisito essencial:</strong> As informações devem cobrir criticamente os avanços sem recortes seletivos tendenciosos, proporcionando direcionamentos substanciais para pesquisas futuras na área[cite: 49].
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div id="sec1-4" class="card">
+          <h3>1.4 Normatização de Redação & Revista Eleita</h3>
+          <p>
+            O manuscrito de TCC não segue o formato monográfico clássico, adotando estritamente a padronização para <strong>artigo científico</strong>[cite: 12, 65]:
+          </p>
+          <div class="accordion-group">
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Normas da Revista Eleita e Anexo Obrigatório</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  A formatação textual, limite de palavras, estilo de referências e tabelas devem seguir exatamente as diretrizes aos autores estabelecidas pelo periódico eleito pelo orientador para submissão[cite: 12]. O aluno <strong>deve anexar ao TCC</strong> a íntegra das normas da revista extraídas diretamente do site da publicação, contendo o respectivo link de acesso[cite: 12].
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Regra Padrão (Revista Fisioterapia e Saúde Funcional)</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  Caso o professor orientador não indique um periódico específico, a regra geral e padrão adotada é a da <strong>Revista Fisioterapia e Saúde Funcional</strong>, mantendo-se a obrigatoriedade de inclusão do anexo com as respectivas normas do periódico[cite: 12].
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Exceção Oficial de Idioma</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  Mesmo quando o periódico eleito exigir submissão em idioma estrangeiro (ex.: inglês), a banca examinadora do curso <strong>poderá receber o artigo em língua portuguesa</strong> para fins de avaliação e defesa no TCC III[cite: 12]. A tradução especializada para submissão externa poderá ocorrer após as correções da banca examinadora[cite: 12].
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. JORNADA DOS MÓDULOS -->
+      <section id="sec2" class="content-section">
+        <h2>2. Jornada dos Módulos & Prazos Oficiais</h2>
+
+        <div id="sec2-1" class="card">
+          <span class="badge">8º Período</span>
+          <h3>2.1 Módulo TCC I: Planejamento, Qualificação & Submissão Ética</h3>
+          <p>
+            Nesta etapa, o estudante elabora seu projeto de pesquisa sob normas ABNT e submete à qualificação técnica online[cite: 13].
+          </p>
+          <div class="flow-steps">
+            <div class="flow-step-card">
+              <div class="flow-step-badge">1</div>
+              <div class="flow-step-meta">Até 20 dias do início do módulo[cite: 33]</div>
+              <strong>Formalização de Orientação (Apêndice B):</strong> Entrega da carta de aceite de orientação assinada pelo professor orientador no SIGAA, com tema e modalidade[cite: 13, 33].
+            </div>
+            <div class="flow-step-card">
+              <div class="flow-step-badge">2</div>
+              <div class="flow-step-meta">Até 30 dias do início do módulo[cite: 33]</div>
+              <strong>Indicação da Banca de Qualificação (Apêndice C):</strong> O orientador formaliza a indicação de 2 avaliadores no SIGAA, contendo qualificação, e-mail, Lattes e CPF[cite: 13, 33].
+            </div>
+            <div class="flow-step-card">
+              <div class="flow-step-badge">3</div>
+              <div class="flow-step-meta">Até 45 dias do início do módulo[cite: 33]</div>
+              <strong>Submissão do Projeto no SIGAA (Apêndice D):</strong> Envio do arquivo em PDF acompanhado do termo de ciência do orientador[cite: 13, 33]. O orientador remete a versão em Word e link do formulário online à banca[cite: 13, 33]. <em>Nota: Atraso acarreta desconto de 2 pontos na 1ª nota do módulo[cite: 33].</em>
+            </div>
+            <div class="flow-step-card">
+              <div class="flow-step-badge">4</div>
+              <div class="flow-step-meta">Até 60 dias do início do módulo[cite: 33]</div>
+              <strong>Avaliação pela Banca de Qualificação:</strong> Membros emitem notas (0 a 10) e considerações via formulário eletrônico online (Apêndice E)[cite: 13, 33].
+            </div>
+            <div class="flow-step-card">
+              <div class="flow-step-badge">5</div>
+              <div class="flow-step-meta">Até 75 dias do início do módulo[cite: 33]</div>
+              <strong>Entrega do Projeto Final & CEP (Apêndice F):</strong> Submissão do projeto com alterações recomendadas, termo de ciência e comprovante de submissão na Plataforma Brasil ou CEPA[cite: 14, 33]. Em casos de projetos guarda-chuva ou dispensa ética, anexam-se os Apêndices G ou H[cite: 14, 39, 40]. <em>Atraso acarreta desconto de 2 pontos na 2ª nota[cite: 33].</em>
+            </div>
+            <div class="flow-step-card">
+              <div class="flow-step-badge">6</div>
+              <div class="flow-step-meta">Até 90 dias do início do módulo[cite: 33]</div>
+              <strong>Avaliação Processual do Orientador (Apêndice U):</strong> O orientador preenche ficha online avaliando o desempenho técnico e científico do orientando[cite: 22, 33].
+            </div>
+          </div>
+        </div>
+
+        <div id="sec2-2" class="card">
+          <span class="badge">9º Período</span>
+          <h3>2.2 Módulo TCC II: Coleta de Dados & Relatório Parcial</h3>
+          <p>
+            Etapa de execução prática do trabalho após a liberação pelo Comitê de Ética em Pesquisa[cite: 65].
+          </p>
+          <ul style="margin: 0.75rem 0 0.75rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li>Encontros regulares de orientação registrados em cronograma e fichas de acompanhamento (Apêndices R e S)[cite: 20, 21].</li>
+            <li>Execução fiel dos procedimentos metodológicos aprovados e coleta das amostras clínicas/experimentais ou revisão da literatura[cite: 53, 60, 65].</li>
+            <li><strong>Produto de conclusão do módulo:</strong> Elaboração e depósito de Relatório Técnico Parcial de Pesquisa em versão digital encaminhado à coordenação do módulo[cite: 65].</li>
+          </ul>
+        </div>
+
+        <div id="sec2-3" class="card">
+          <span class="badge">10º Período</span>
+          <h3>2.3 Módulo TCC III: Artigo, Parecer da Banca & Defesa Pública</h3>
+          <p>
+            Módulo decisivo com redação final do artigo, apreciação prévia do manuscrito pela banca e realização da defesa presencial pública[cite: 15, 65].
+          </p>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Momento Limite</th>
+                  <th scope="col">Ação Obrigatória do Estudante & Orientador</th>
+                  <th scope="col">Documentação Envolvida</th>
+                  <th scope="col">Penalidade por Atraso</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Até 60 dias</strong>[cite: 41]</td>
+                  <td>Comprovação de parecer favorável do CEP/CEPA (ou dispensa formal)[cite: 15, 41]; indicação oficial dos membros da banca examinadora (Apêndice K)[cite: 15, 41]; e submissão do <strong>Artigo Preliminar</strong> no SIGAA[cite: 15, 41].</td>
+                  <td>Apêndice J, Apêndice K e Apêndice L[cite: 15, 42, 43, 44]</td>
+                  <td>Desconto de <strong>-2,0 pontos</strong> na 1ª Nota de PF III em caso de entrega fora do prazo[cite: 41].</td>
+                </tr>
+                <tr>
+                  <td><strong>Até 75 dias</strong>[cite: 41]</td>
+                  <td>Orientador alinha e define a data, horário e sala da defesa em contato com a banca examinadora; coordenação e secretaria operacionalizam suporte e registro institucional.</td>
+                  <td>Cronograma e logística das defesas (Google Sites / SIGAA)[cite: 41]</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><strong>Até 80 dias</strong>[cite: 41]</td>
+                  <td>Submissão do <strong>Artigo Final no SIGAA</strong> com termo do orientador[cite: 15, 41]. O orientador despacha versão em Word e link do formulário online (Apêndice N) aos avaliadores[cite: 15, 41].</td>
+                  <td>Apêndice M, Carta Convite (Apêndice T) e Ficha de Avaliação Escrita (Apêndice N)[cite: 15, 45, 46, 55]</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><strong>Até 90 dias</strong>[cite: 41]</td>
+                  <td>Realização da <strong>Sessão Pública de Defesa Oral</strong> perante a Banca Examinadora presidida pelo orientador[cite: 22, 28, 41].</td>
+                  <td>Ficha de Avaliação Oral (Apêndice O), Avaliação do Orientador (Apêndice V) e Ata (Apêndice X)[cite: 15, 22, 41, 50, 59, 62]</td>
+                  <td>Falta injustificada resulta em reprovação automática[cite: 28].</td>
+                </tr>
+                <tr>
+                  <td><strong>Até 97 dias</strong> (7 dias pós-defesa)[cite: 16, 41]</td>
+                  <td>Depósito do <strong>Artigo Final com as alterações e correções exigidas pela banca</strong> no SIGAA, com anuência do orientador[cite: 16, 30, 41].</td>
+                  <td>Apêndice P e Artigo Corrigido em PDF[cite: 16, 41, 51]</td>
+                  <td>Desconto de <strong>-2,0 pontos</strong> na 2ª Nota de PF III caso o prazo seja violado[cite: 41].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. PAPÉIS & ATRIBUIÇÕES -->
+      <section id="sec3" class="content-section">
+        <h2>3. Papéis & Atribuições dos Intervenientes</h2>
+
+        <div id="sec3-1" class="card">
+          <h3>3.1 Professor Orientador do TCC</h3>
+          <p>
+            Membro docente do curso de Fisioterapia da UFC com titulação mínima de especialista[cite: 18, 19]. No caso de professores substitutos ou temporários, o contrato deve cobrir integralmente a data prevista da defesa pública[cite: 18, 19].
+          </p>
+          <div class="callout callout-update">
+            <strong>Responsabilidade Central na Defesa:</strong> O professor orientador é o responsável exclusivo por planejar a data, compor e convidar a banca examinadora, lavrar a ata e presidir os trabalhos da sessão pública de defesa[cite: 21, 22, 62].
+          </div>
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+            <li><strong>Capacidade de orientação:</strong> Docentes de 40 horas semanais podem orientar até 4 alunos por semestre (máximo de 8 discentes simultâneos em diferentes fases)[cite: 19, 26, 65]. Docentes de 20 horas podem orientar até 2 discentes por semestre[cite: 19] (ou até 4 sob as regras consolidadas do PPC)[cite: 65].</li>
+            <li><strong>Participação em bancas:</strong> Para viabilidade logística, cada professor pode atuar em no máximo 5 bancas por semestre (incluindo as bancas que preside como orientador)[cite: 27].</li>
+            <li><strong>Prazos com orientandos:</strong> Limite máximo de até 15 dias corridos para devolução de materiais corrigidos ao acadêmico[cite: 21].</li>
+            <li><strong>Desistência / Afastamento:</strong> Pode formalizar desistência justificada (Apêndice Z) até 6 meses antes da defesa, comunicando orientando e coordenação[cite: 23, 63]. A substituição só ocorre mediante assunção formal por outro docente e aquiescência do substituído[cite: 23].</li>
+          </ul>
+        </div>
+
+        <div id="sec3-2" class="card">
+          <h3>3.2 Coorientador & Orientador Externo</h3>
+          <p>
+            Poderão atuar docentes da UFC ou profissionais graduados com titulação mínima de especialista sem vínculo funcional com a UFC, atuando em caráter de cooperação voluntária, sem qualquer ônus financeiro para a instituição[cite: 19].
+          </p>
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+            <li>O coorientador externo deve assinar o <em>Termo de Compromisso de Coorientação Voluntária</em> (Apêndice Q)[cite: 19, 52].</li>
+            <li>Atua em corresponsabilidade direta, auxiliando no cronograma e prestando devolutivas ao acadêmico e ao orientador[cite: 23, 24].</li>
+            <li><strong>Vedação absoluta em bancas:</strong> O coorientador <strong>não pode participar como examinador na banca</strong> do seu orientando; a única exceção ocorre na hipótese de impedimento comprovado do orientador principal, situação em que assume a presidência da sessão[cite: 24].</li>
+          </ul>
+        </div>
+
+        <div id="sec3-3" class="card">
+          <h3>3.3 Corpo Discente</h3>
+          <p>Deveres e responsabilidades do acadêmico durante toda a jornada[cite: 25]:</p>
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+            <li>Cumprir rigorosamente as normas éticas e regulamentos institucionais do TCC[cite: 25].</li>
+            <li>Manter frequência mínima de 90% nas atividades dos módulos de pesquisa[cite: 65].</li>
+            <li>Garantir autenticidade autoral irrestrita de suas produções sob pena de reprovação sumária[cite: 25, 27].</li>
+            <li>Cumprir com pontualidade o cronograma acordado de encontros e postagens no SIGAA[cite: 21, 25].</li>
+            <li>Submeter o artigo final corrigido e providenciar o depósito do TCC junto à Biblioteca Universitária[cite: 26, 65].</li>
+          </ul>
+        </div>
+
+        <div id="sec3-4" class="card">
+          <h3>3.4 Coordenação de Graduação, Secretaria & Coordenação do Módulo</h3>
+          <p>Estrutura institucional que apoia e operacionaliza o curso[cite: 18, 19, 65]:</p>
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+            <li><strong>Secretaria da Coordenação de Fisioterapia:</strong> Formaliza registros acadêmicos no SIGAA, apoia as reservas de salas para as sessões de defesa, emite as declarações aos membros das bancas e faz a intermediação institucional com a Biblioteca Universitária para remessa dos trabalhos ao Repositório Institucional[cite: 21, 41, 65].</li>
+            <li><strong>Coordenação do Curso e do Módulo:</strong> Supervisiona os planos de ensino, soluciona impasses de matrícula e conflitos operacionais e valida as notas finais homologadas em ata[cite: 10, 18, 19, 31].</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 4. SESSÃO DE DEFESA PÚBLICA -->
+      <section id="sec4" class="content-section">
+        <h2>4. Sessão de Defesa Pública de TCC</h2>
+
+        <div id="sec4-1" class="card">
+          <h3>4.1 Composição da Banca Examinadora</h3>
+          <p>
+            A banca examinadora de TCC é constituída por <strong>2 (dois) professores avaliadores</strong>, preferencialmente vinculados ao Curso de Fisioterapia da UFC, facultando-se a indicação de 1 (um) membro externo com notória afinidade ao tema (sem ônus para a UFC)[cite: 29]. A sessão é presidida pelo <strong>professor orientador</strong>[cite: 22].
+          </p>
+          <div class="callout callout-warning">
+            <strong>Impedimentos Legais:</strong> Não podem participar da banca o coorientador do estudo, colaboradores diretos participantes da pesquisa ou coautores do manuscrito submetido[cite: 29].
+          </div>
+        </div>
+
+        <div id="sec4-2" class="card">
+          <h3>4.2 Cronometragem e Protocolo da Sessão (Aprox. 60 Minutos)</h3>
+          <p>A defesa pública perante a banca transcorre em rito solene dividido nos seguintes tempos estipulados[cite: 28]:</p>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Etapa</th>
+                  <th scope="col">Tempo Previsto</th>
+                  <th scope="col">Procedimento Realizado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Abertura Solene</strong>[cite: 28]</td>
+                  <td>~ 5 minutos[cite: 28]</td>
+                  <td>O Orientador instala a sessão pública, apresenta a composição da banca e os objetivos do evento[cite: 28].</td>
+                </tr>
+                <tr>
+                  <td><strong>Exposição Oral do Aluno</strong>[cite: 28]</td>
+                  <td>Até 20 minutos[cite: 28]</td>
+                  <td>Apresentação dos antecedentes teóricos, objetivos, metodologia, principais resultados e conclusões[cite: 28].</td>
+                </tr>
+                <tr>
+                  <td><strong>Arguição da Banca</strong>[cite: 28]</td>
+                  <td>Até 20 minutos[cite: 28]</td>
+                  <td>Cerca de 10 minutos para considerações e questionamentos de cada um dos dois examinadores[cite: 28].</td>
+                </tr>
+                <tr>
+                  <td><strong>Respostas do Aluno</strong>[cite: 28]</td>
+                  <td>Até 10 minutos[cite: 28]</td>
+                  <td>O estudante dispõe de até 5 minutos para responder individualmente a cada um dos avaliadores[cite: 28].</td>
+                </tr>
+                <tr>
+                  <td><strong>Sessão Secreta & Leitura da Ata</strong>[cite: 28, 62]</td>
+                  <td>~ 5 minutos[cite: 28, 62]</td>
+                  <td>A banca se reúne em sessão reservada para deliberação de notas; orientador lavra a Ata (Apêndice X) e faz a leitura pública do resultado final[cite: 28, 62].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="sec4-3" class="card">
+          <h3>4.3 Critérios Oficiais da Avaliação Oral (Apêndice O)</h3>
+          <p>No dia da defesa, cada examinador avalia a sustentação e oratória com base em 6 critérios técnicos definidos no formulário institucional[cite: 15, 50]:</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Item Avaliado</th>
+                  <th scope="col">Critério de Julgamento</th>
+                  <th scope="col">Pontuação Máxima</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. Visão Introdutória</strong>[cite: 50]</td>
+                  <td>Motivação inicial, relevância do tema e identificação do problema[cite: 50].</td>
+                  <td>0 a 1,0 ponto[cite: 50]</td>
+                </tr>
+                <tr>
+                  <td><strong>2. Desenvolvimento da Exposição</strong>[cite: 50]</td>
+                  <td>Clareza metodológica, domínio teórico, encadeamento lógico e linguagem científica[cite: 50].</td>
+                  <td>0 a 2,0 pontos[cite: 50]</td>
+                </tr>
+                <tr>
+                  <td><strong>3. Recursos Didáticos</strong>[cite: 50]</td>
+                  <td>Qualidade visual dos slides, tabelas, gráficos e legibilidade[cite: 50].</td>
+                  <td>0 a 1,0 ponto[cite: 50]</td>
+                </tr>
+                <tr>
+                  <td><strong>4. Capacidade de Síntese</strong>[cite: 50]</td>
+                  <td>Destaque das conclusões principais e dos achados fundamentais[cite: 50].</td>
+                  <td>0 a 2,0 pontos[cite: 50]</td>
+                </tr>
+                <tr>
+                  <td><strong>5. Gestão do Tempo</strong>[cite: 50]</td>
+                  <td>Apresentação rigorosa dentro dos 20 minutos estipulados[cite: 28, 50].</td>
+                  <td>0 a 1,0 ponto[cite: 50]</td>
+                </tr>
+                <tr>
+                  <td><strong>6. Desempenho na Arguição</strong>[cite: 50]</td>
+                  <td>Segurança teórica, firmeza e pertinência ao responder às indagações da banca[cite: 50].</td>
+                  <td>0 a 3,0 pontos[cite: 50]</td>
+                </tr>
+                <tr style="font-weight: 700; background: var(--highlight);">
+                  <td colspan="2">TOTAL DA AVALIAÇÃO ORAL</td>
+                  <td>0 a 10,0 pontos[cite: 50]</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. CRITÉRIOS DE AVALIAÇÃO & NOTA -->
+      <section id="sec5" class="content-section">
+        <h2>5. Critérios de Avaliação & Cálculo da Nota</h2>
+
+        <div id="sec5-1" class="card">
+          <h3>5.1 Metodologia de Cálculo das Notas e Dedutores de Prazos</h3>
+          <p>
+            A nota final em cada módulo de TCC resulta da composição equilibrada entre as avaliações dos pareceristas da banca e a avaliação contínua do professor orientador, sujeita a penalizações dedutivas[cite: 16, 29]:
+          </p>
+
+          <div style="background: var(--bg-main); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--secondary); margin: 1rem 0;">
+            <p style="font-weight: 600; color: var(--primary); font-size: 1.05rem; margin-bottom: 0.5rem;">Cálculo do Módulo de TCC III:</p>
+            <p><strong>Nota 1:</strong> Depósito do Artigo Preliminar no SIGAA até o 60º dia (10,0 pontos)[cite: 41]. <em>Atraso: dedução de 2,0 pontos[cite: 41].</em></p>
+            <p style="margin-top: 0.35rem;">
+              <strong>Nota 2 (Média Composta):</strong> Média ponderada da avaliação de manuscrito e oralidade[cite: 41]:
+              <br>
+              <code>Nota 2 = [(Nota Escrita/Oral Orientador) + (Nota Escrita/Oral Avaliador 1) + (Nota Escrita/Oral Avaliador 2)] / 3</code>[cite: 41]
+              <br>
+              <em>Penalidade de prazo: Atraso na entrega do Artigo Final Corrigido após a defesa deduz 2,0 pontos nesta nota[cite: 41].</em>
+            </p>
+            <p style="margin-top: 0.35rem;">
+              <strong>Média Final do TCC:</strong> <code>(Nota 1 + Nota 2) / 2</code> ou consolidada na escala institucional[cite: 41, 65].
+            </p>
+          </div>
+
+          <div class="callout callout-warning">
+            <strong>Inexistência de Prova Final / Recuperação:</strong> Conforme o regulamento oficial do TCC, <strong>não há exame de recuperação ou reavaliação de nota final atribuída em banca examinadora</strong>[cite: 30]. O parecer da banca homologado em ata é irrecorrível e definitivo[cite: 30]. Em caso de reprovação, é expressamente vedada a apresentação de novo TCC no mesmo semestre[cite: 31].
+          </div>
+        </div>
+
+        <div id="sec5-2" class="card">
+          <h3>5.2 Condições Regimentais para Aprovação</h3>
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li><strong>Média Aritmética Mínima:</strong> Obter média final igual ou superior a 7,0 (na escala 0 a 10) do manual de TCC[cite: 16, 30] ou 50 (na escala 0 a 100) do PPC institucional[cite: 65].</li>
+            <li><strong>Frequência Escolar:</strong> Ter frequência igual ou superior a <strong>90%</strong> nas atividades e orientações programadas (Regimento Geral da UFC, art. 116)[cite: 65].</li>
+            <li><strong>Sessão de Defesa:</strong> Participação obrigatória na data e horário marcados perante a banca[cite: 26, 28].</li>
+            <li><strong>Depósito Final:</strong> Entrega da versão definitiva corrigida no SIGAA dentro do prazo máximo regulamentar[cite: 16, 30].</li>
+          </ul>
+        </div>
+
+        <div id="sec5-3" class="card">
+          <h3>5.3 Controle Antiplágio & Integridade Ética</h3>
+          <p>
+            É estritamente vedada a entrega de material que contenha plágio total ou parcial[cite: 22, 27]. Define-se como plágio o uso indevido, sem créditos ou transcrito sem aspas e referências adequadas de produções de outros autores ou do próprio estudante em outros módulos[cite: 27, 56].
+          </p>
+          <p style="margin-top: 0.5rem;">
+            Detectada e comprovada qualquer fraude de autenticidade, o professor orientador e o Colegiado de Fisioterapia adotarão uma de duas medidas formais[cite: 27]:
+          </p>
+          <ol style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li>Solicitar elaboração de versão completamente reformulada, impedindo o estudante de realizar a exposição do trabalho no período vigente[cite: 27]; ou</li>
+            <li><strong>Reprovação sumária</strong> do orientando no módulo de TCC, com homologação imediata junto à Coordenação do Curso[cite: 27].</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 6. PÓS-DEFESA & REPOSITÓRIO -->
+      <section id="sec6" class="content-section">
+        <h2>6. Pós-Defesa & Depósito no Repositório Institucional</h2>
+
+        <div id="sec6-1" class="card">
+          <h3>6.1 Prazo Improrrogável de 7 Dias para Versão Corrigida</h3>
+          <p>
+            Após a realização da defesa oral, a banca examinadora reserva-se o direito de estipular modificações e aprimoramentos no artigo científico[cite: 30]. O acadêmico dispõe do prazo improrrogável de <strong>7 (sete) dias corridos</strong> para incorporar os ajustes solicitados pela banca e submeter o arquivo final corrigido no SIGAA[cite: 16, 30], acompanhado do Termo de Ciência assinado pelo Orientador (Apêndice P)[cite: 16, 51].
+          </p>
+          <div class="callout callout-warning">
+            A não submissão do artigo final corrigido impede o lançamento e consolidação da nota final no sistema acadêmico, impossibilitando a colação de grau e a expedição do diploma universitário[cite: 30].
+          </div>
+        </div>
+
+        <div id="sec6-2" class="card">
+          <h3>6.2 Ficha Catalográfica e Trâmites junto à Biblioteca da UFC</h3>
+          <p>
+            Para envio ao Repositório Institucional da Biblioteca Central da UFC, os seguintes passos devem ser seguidos conforme o PPC[cite: 65]:
+          </p>
+          <ol style="margin: 0.5rem 0 0.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li>O estudante gera a <strong>Ficha Catalográfica</strong> oficial por meio do sistema eletrônico institucional (<code>fichacatalografica.ufc.br</code>)[cite: 65].</li>
+            <li>A ficha deve ser inserida obrigatoriamente logo após a folha de rosto do documento final[cite: 65].</li>
+            <li>O orientador confere a formatação e assina o <em>Termo de Ciência</em>[cite: 65].</li>
+            <li>O aluno preenche e anexa o <strong>Termo de Autorização para Disponibilizar Documentos Digitais</strong> no Repositório da UFC[cite: 65].</li>
+            <li>A Secretaria da Coordenação de Fisioterapia formaliza o envio dos arquivos digitais para a equipe de bibliotecários[cite: 65].</li>
+          </ol>
+        </div>
+
+        <div id="sec6-3" class="card">
+          <h3>6.3 Preservação do Ineditismo (Depósito com Disponibilização Parcial)</h3>
+          <p>
+            Caso o artigo de TCC esteja em processo de submissão ou aceitação em revista científica indexada, o regulamento resguarda o direito ao sigilo prévio visando preservar o ineditismo da publicação[cite: 65]:
+          </p>
+          <div class="callout callout-update">
+            O estudante e o orientador podem solicitar no termo formal a <strong>disponibilização parcial no Repositório</strong>: um arquivo contendo apenas os elementos pré-textuais (título, resumo, palavras-chave) torna-se público de imediato, enquanto o texto integral permanece embargado até a data acordada da publicação periódica[cite: 65].
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. GUIA DE APÊNDICES & MODELOS -->
+      <section id="sec7" class="content-section">
+        <h2>7. Guia Oficial de Apêndices, Termos & Fichas</h2>
+        <div class="card">
+          <p>Consulte todos os modelos e instrumentos documentais padronizados pelo Curso de Fisioterapia da UFC[cite: 6]:</p>
+          
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Apêndice</th>
+                  <th scope="col">Finalidade & Descrição do Instrumento</th>
+                  <th scope="col">Módulo</th>
+                  <th scope="col">Responsável</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Apêndice A</strong>[cite: 33]</td>
+                  <td>Fluxograma detalhado de etapas e prazos de avaliação de projeto[cite: 33].</td>
+                  <td>TCC I (PF II)[cite: 33]</td>
+                  <td>Orientador e Aluno[cite: 33]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice B</strong>[cite: 34]</td>
+                  <td>Carta formal de Aceite de Orientação com temática e desenho[cite: 13, 34].</td>
+                  <td>TCC I[cite: 13, 34]</td>
+                  <td>Orientador[cite: 13, 34]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice C</strong>[cite: 35]</td>
+                  <td>Indicação dos dois membros da banca de qualificação do projeto[cite: 13, 35].</td>
+                  <td>TCC I[cite: 13, 35]</td>
+                  <td>Orientador[cite: 13, 35]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice D</strong>[cite: 36]</td>
+                  <td>Termo de ciência para submissão do projeto de pesquisa no SIGAA[cite: 13, 36].</td>
+                  <td>TCC I[cite: 13, 36]</td>
+                  <td>Orientador e Aluno[cite: 13, 36]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice E</strong>[cite: 37]</td>
+                  <td>Ficha de avaliação técnica do projeto de pesquisa (0 a 100)[cite: 13, 37].</td>
+                  <td>TCC I[cite: 13, 37]</td>
+                  <td>Banca Examinadora[cite: 13, 37]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice F</strong>[cite: 38]</td>
+                  <td>Autorização de entrega do projeto corrigido e confirmação de envio ao CEP[cite: 14, 38].</td>
+                  <td>TCC I[cite: 14, 38]</td>
+                  <td>Orientador[cite: 14, 38]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice G</strong>[cite: 39]</td>
+                  <td>Justificativa de recorte de pesquisa de projeto "guarda-chuva" ampliado[cite: 14, 39].</td>
+                  <td>TCC I[cite: 14, 39]</td>
+                  <td>Orientador[cite: 14, 39]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice H</strong>[cite: 40]</td>
+                  <td>Declaração de justificativa de dispensa ética de submissão ao CEP[cite: 14, 40].</td>
+                  <td>TCC I[cite: 14, 40]</td>
+                  <td>Orientador[cite: 14, 40]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice I</strong>[cite: 41]</td>
+                  <td>Fluxograma do processo avaliativo do módulo de artigo e defesa[cite: 41].</td>
+                  <td>TCC III (PF III)[cite: 41]</td>
+                  <td>Coordenação e Orientador[cite: 41]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice J</strong>[cite: 42]</td>
+                  <td>Confirmação de aprovação consubstanciada no CEP ou CEPA[cite: 15, 42].</td>
+                  <td>TCC III[cite: 15, 42]</td>
+                  <td>Orientador[cite: 15, 42]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice K</strong>[cite: 43]</td>
+                  <td>Indicação dos dois componentes titulares da banca de defesa do artigo[cite: 15, 43].</td>
+                  <td>TCC III[cite: 15, 43]</td>
+                  <td>Orientador[cite: 15, 43]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice L</strong>[cite: 44]</td>
+                  <td>Termo de ciência para entrega do artigo preliminar no SIGAA[cite: 15, 44].</td>
+                  <td>TCC III[cite: 15, 44]</td>
+                  <td>Orientador e Aluno[cite: 15, 44]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice M</strong>[cite: 45]</td>
+                  <td>Ciência de submissão do artigo final aos membros da banca examinadora[cite: 15, 45].</td>
+                  <td>TCC III[cite: 15, 45]</td>
+                  <td>Orientador[cite: 15, 45]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice N</strong>[cite: 46]</td>
+                  <td>Ficha online de avaliação do manuscrito da banca examinadora[cite: 15, 46].</td>
+                  <td>TCC III[cite: 15, 46]</td>
+                  <td>Banca Examinadora[cite: 15, 46]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice O</strong>[cite: 50]</td>
+                  <td>Ficha impressa de avaliação da sustentação oral na defesa pública[cite: 15, 50].</td>
+                  <td>TCC III[cite: 15, 50]</td>
+                  <td>Banca Examinadora[cite: 15, 50]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice P</strong>[cite: 51]</td>
+                  <td>Termo de autorização para entrega do artigo final com correções da banca[cite: 16, 51].</td>
+                  <td>TCC III[cite: 16, 51]</td>
+                  <td>Orientador[cite: 16, 51]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice Q</strong>[cite: 52]</td>
+                  <td>Termo de compromisso de coorientação voluntária sem ônus financeiro[cite: 19, 52].</td>
+                  <td>TCC I / III[cite: 19, 52]</td>
+                  <td>Coorientador[cite: 19, 52]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice R</strong>[cite: 53]</td>
+                  <td>Modelo de cronograma mensal para encontros presenciais e virtuais[cite: 21, 53].</td>
+                  <td>TCC I, II, III[cite: 21, 53]</td>
+                  <td>Orientador e Aluno[cite: 21, 53]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice S</strong>[cite: 54]</td>
+                  <td>Ficha de registro de atividades executadas e demandas futuras[cite: 21, 54].</td>
+                  <td>TCC I, II, III[cite: 21, 54]</td>
+                  <td>Orientador e Aluno[cite: 21, 54]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice T</strong>[cite: 55]</td>
+                  <td>Modelo padrão de carta-convite institucional aos examinadores[cite: 22, 55].</td>
+                  <td>TCC I / III[cite: 22, 55]</td>
+                  <td>Orientador[cite: 22, 55]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice U</strong>[cite: 56]</td>
+                  <td>Ficha avaliativa online do orientador sobre o desempenho processual em PF II[cite: 22, 56].</td>
+                  <td>TCC I[cite: 22, 56]</td>
+                  <td>Orientador[cite: 22, 56]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice V</strong>[cite: 59]</td>
+                  <td>Ficha avaliativa de desempenho discente em PF III (atitude, ética e rigor)[cite: 22, 59].</td>
+                  <td>TCC III[cite: 22, 59]</td>
+                  <td>Orientador[cite: 22, 59]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice X</strong>[cite: 62]</td>
+                  <td>Ata oficial da Sessão Pública de Defesa do TCC[cite: 22, 62].</td>
+                  <td>TCC III[cite: 22, 62]</td>
+                  <td>Orientador e Banca[cite: 22, 62]</td>
+                </tr>
+                <tr>
+                  <td><strong>Apêndice Z</strong>[cite: 63]</td>
+                  <td>Termo de desistência ou impossibilidade formal de continuidade do orientador[cite: 23, 63].</td>
+                  <td>TCC I / II / III[cite: 23, 63]</td>
+                  <td>Orientador
